@@ -2,7 +2,7 @@
 const wrapper = require('solc/wrapper');
 const soljson = require('./soljson.js');
 const solc = wrapper(soljson);
-const { Account, Address, BN } = require('ethereumjs-util');
+const { Account, Address, BN, keccak256 } = require("ethereumjs-util");
 const { defaultAbiCoder, Interface } = require('@ethersproject/abi');
 const AbiCoder = defaultAbiCoder;
 const VM = require('@ethereumjs/vm').default;
@@ -89,10 +89,9 @@ async function runCode(contract) {
   // vm.on('beforeMessage', function (data) {
   //   console.log(data)
   // })
-
   await vm.stateManager.putAccount(accountAddress, account)
   const contractAddress = await deployContract(vm, accountPk, bytecode)
-  // console.log(contractAddress);
+   console.log("Contract: ", contractAddress.toString());
 
   vm.on('afterMessage', function (data) {
     // console.log('afterMessage', data)
@@ -120,17 +119,47 @@ async function runCode(contract) {
 
   // const results = AbiCoder.decode(['string'], runResult.execResult.returnValue)
   // return results[0]
-  console.log(runResult.execResult.logs.map(_ => {
+  const log = runResult.execResult.logs[2];
+  const [to, topics , data ] = log;
+  const eventABI = contract.abi.filter(_ => _.type == 'event').map(_ => {
 
+    _.types = _.inputs.map(c => c.type);
+    const func = _.inputs.map(c => c.type).join(',');
+    const fn = `${_.name}(${func})`;
+    _.uid = keccak256(Buffer.from(fn)).toString("hex");
+    _.fnc = fn;
+    return _;
+  });
+
+
+  runResult.execResult.logs = runResult.execResult.logs.map((_) => {
+    const [to, topics, data] = log;
+    let tps = topics.map((_) => _.toString("hex"));
+    const matchEvent = eventABI.filter((_) => tps.indexOf(_.uid) > -1)[0];
+    const parsed = AbiCoder.decode(matchEvent.types, data);
     return {
-      account: Address.from(_[0]),
-    }
-  }))
+      event: matchEvent,
+      to: new Address(to).toString(),
+      topics: tps,
+      data: parsed,
+    };
+  });
+
+//   console.log(
+//     contractAddress,
+//     new Address(to).toString(),
+//     eventABI[1],
+//     AbiCoder.decode(["string", "string"], data),
+//     topics.map((_) => _.toString('hex'))
+//   );
+
+
+console.log(runResult.execResult.logs);
 }
 
 // const bytecode = output.contracts[mainFile].Main.evm.bytecode.object;
 // runCode(output.contracts[mainFile].Main);
-// console.log(VM)
+
 
 
 const fs = require('fs');
@@ -148,7 +177,19 @@ async function runContract(filename, opts) {
   sources[filename] = {
     content: fs.readFileSync(countractFile).toString('utf8')
   }
-  const output = await complieContract(sources);
+
+  let output ;
+  try {
+   output = await complieContract(sources);
+  } catch (e) {
+    process.exit();
+  }
+
+  if (!output.contracts) {
+    console.log(output.errors.filter((_) => _.severity == 'error'));
+    process.exit();
+  }
+
   const allContractsInFile = output.contracts[filename];
   const conrtactData = allContractsInFile[runCountractName];
   if (conrtactData) {
@@ -165,7 +206,13 @@ program
   .option('-d, --debug', 'display some debugging')
   .description('Run Solidity Contractor')
   .action(async (filename, opts, command) => {
-    await runContract(filename, opts);
+
+    try {
+      await runContract(filename, opts);
+    } catch (e) {
+      console.log('failed')
+    }
+ 
     // console.log('clone command called', filename);
   });
 
