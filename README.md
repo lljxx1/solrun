@@ -51,7 +51,7 @@ Test(now state is, fuck)
 
 
 ## Roadamp
-[x] Run contract  
-[ ] Support `import`  
-[ ] Call specify function  
-[ ] Multiple function call  
+- [x] Run contract  
+- [ ] Support `import`  
+- [ ] Call specify function  
+- [ ] Multiple function call  
