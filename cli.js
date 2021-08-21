@@ -160,7 +160,8 @@ async function runContract(filename, opts) {
   const sources = {};
   const baseDir = process.cwd();
   const countractFile = path.resolve(baseDir, filename);
-  const runCountractName = opts.contract || "Main";
+
+  
 
   console.log("baseDir", baseDir, countractFile);
   // const mainFile = pro
@@ -185,6 +186,11 @@ async function runContract(filename, opts) {
   }
 
   const allContractsInFile = output.contracts[filename];
+  const inFileConstracts = Object.keys(allContractsInFile);
+  const runCountractName =
+    opts.contract ||
+    (inFileConstracts.length == 1 ? inFileConstracts[0] : "Main");
+
   const conrtactData = allContractsInFile[runCountractName];
   if (conrtactData) {
     // console.log(sources, output);
