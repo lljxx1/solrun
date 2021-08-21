@@ -3,6 +3,11 @@ Command line tool for run solidity contract locally. based on [ethereumjs-vm](ht
 
 - default solc complier version is `0.6.12`  
 
+## Install
+``` shell
+npm install solrun -g
+```
+
 ## Example
 Let's take a look!
 
