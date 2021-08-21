@@ -1,7 +1,16 @@
 {
   "name": "solrun",
+  "version": "0.0.2",
+  "email": "lljxx1@gmail.com",
+  "description": "Command line tool for run solidity contract locally. based on ethereumjs-vm and soljson.js",
+  "license": "ISC",
+  "keywords": "Solidity,EVM",
   "bin": {
     "solrun": "solrun.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lljxx1/solrun.git"
   },
   "dependencies": {
     "@ethereumjs/tx": "^3.3.0",
