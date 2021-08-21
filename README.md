@@ -8,13 +8,20 @@ Let's take a look!
 
 ### test.sol
 ``` solidity
+
 contract Main {
+    
     event Log(string);
     event Test(string, string);
 
     string public state;
 
+    constructor() {
+        state = "constructor";
+    }
+
     function run() external {
+        emit Log(state);
         if (2 > 1) emit Log("failed");
         emit Log("hello world");
         emit Test("Abc", "ad");
@@ -41,3 +48,10 @@ Log(hello world)
 Test(Abc, ad)
 Test(now state is, fuck)
 ```
+
+
+## Roadamp
+[x] Run contract
+[ ] Support `import`
+[ ] Call specify function
+[ ] Multiple function call
