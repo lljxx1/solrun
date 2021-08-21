@@ -49,10 +49,9 @@ Test(Abc, ad)
 Test(now state is, fuck)
 ```
 
-
 ## Roadamp
 - [x] Run contract  
 - [ ] Support `import`  
-- [ ] Call specify Contract  
-- [ ] Call specify function  
-- [ ] Multiple function call
+- [ ] Call specify Contract and method
+- [ ] Multiple method call
+- [ ] Switch solc compiler vesion
