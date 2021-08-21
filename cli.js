@@ -36,6 +36,8 @@ async function complieContract(sources) {
   var output = JSON.parse(
     solc.compile(JSON.stringify(input), { import: findImports })
   );
+
+
   return output;
 }
 
@@ -85,9 +87,10 @@ async function runCode(contract) {
   const vm = new VM();
 
   // newContract
-  // vm.on('beforeMessage', function (data) {
-  //   console.log(data)
-  // })
+  vm.on('error', function (er) {
+    console.log('vm.error', er)
+  })
+
   await vm.stateManager.putAccount(accountAddress, account);
   const contractAddress = await deployContract(vm, accountPk, bytecode);
   //  console.log("Contract: ", contractAddress.toString());
@@ -140,7 +143,9 @@ async function runCode(contract) {
       to: new Address(to).toString(),
       topics: tps,
       data: parsed,
-      log: [matchEvent.name, "(", parsed.map(_ => JSON.stringify(_)).join(", "), ")"].join(""),
+      log: [matchEvent.name, "(", parsed.map(_ => {
+        return _.toString();
+      }).join(", "), ")"].join(""),
     };
   });
 
@@ -181,9 +186,20 @@ async function runContract(filename, opts) {
 
   const allContractsInFile = output.contracts[filename];
   const inFileConstracts = Object.keys(allContractsInFile);
-  const runCountractName =
+  let runCountractName =
     opts.contract ||
     (inFileConstracts.length == 1 ? inFileConstracts[0] : "Main");
+
+  if(!allContractsInFile[runCountractName]) {
+    inFileConstracts.forEach(contractName => {
+      const currentContract = allContractsInFile[contractName];
+      const { methodIdentifiers } = currentContract.evm;
+      // find has mian
+      if (methodIdentifiers["main()"]) {
+        runCountractName = contractName;
+      }
+    })
+  }
 
   const conrtactData = allContractsInFile[runCountractName];
   if (conrtactData) {
@@ -203,7 +219,7 @@ program
     try {
       await runContract(filename, opts);
     } catch (e) {
-      console.log("failed");
+      console.log("failed", e.toString());
     }
 
     // console.log('clone command called', filename);
