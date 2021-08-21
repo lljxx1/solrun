@@ -76,7 +76,7 @@ async function runCode(contract) {
   )
 
   const accountAddress = Address.fromPrivateKey(accountPk)
-  console.log('Account: ', accountAddress.toString())
+  // console.log('Account: ', accountAddress.toString())
   const acctData = {
     nonce: 0,
     balance: new BN(100).pow(new BN(18)), // 1 eth
@@ -91,7 +91,7 @@ async function runCode(contract) {
   // })
   await vm.stateManager.putAccount(accountAddress, account)
   const contractAddress = await deployContract(vm, accountPk, bytecode)
-   console.log("Contract: ", contractAddress.toString());
+  //  console.log("Contract: ", contractAddress.toString());
 
   vm.on('afterMessage', function (data) {
     // console.log('afterMessage', data)
@@ -197,8 +197,8 @@ async function runContract(filename, opts) {
 
 program
   .argument('<filename>')
-  .option('-t, --title <honorific>', 'title to use before name')
-  .option('-d, --debug', 'display some debugging')
+  // .option('-t, --title <honorific>', 'title to use before name')
+  // .option('-d, --debug', 'display some debugging')
   .description('Run Solidity Contractor')
   .action(async (filename, opts, command) => {
 
