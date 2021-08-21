@@ -8,8 +8,10 @@ Command line tool for run solidity contract locally. based on [ethereumjs-vm](ht
 npm install solrun -g
 ```
 
-## Example
-Let's take a look!
+## Usage
+``` shell
+solrun test.sol
+```
 
 ### test.sol
 ``` solidity
@@ -76,10 +78,6 @@ contract Test {
 }
 ```
 
-### Run
-``` shell
-solrun test.sol
-```
 
 ### Output
 ``` bash
