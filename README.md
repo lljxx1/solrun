@@ -1,6 +1,5 @@
-# Solidity Run
-
-
+# solrun
+Command line tool to run solidity contract locally，based on ethereumjs-vm，solison
 
 `test.sol`
 ``` solidity
