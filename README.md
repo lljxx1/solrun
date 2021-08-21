@@ -1,5 +1,5 @@
 # solrun
-Command line tool to run solidity contract locally，based on ethereumjs-vm，solison
+Command line tool for run solidity contract locally. based on ethereumjs-vm and solison
 
 `test.sol`
 ``` solidity
@@ -30,8 +30,6 @@ solrun test.sol
 
 Output:
 ``` bash
-Account:  0xbe862ad9abfe6f22bcb087716c7d89a26051f74c
-Contract:  0x61de9dc6f6cff1df2809480882cfd3c2364b28f7
 Log(failed)
 Log(hello world)
 Test(Abc, ad)
