@@ -8,7 +8,6 @@ Let's take a look!
 
 ### test.sol
 ``` solidity
-
 contract Test {
 
     event Log(string);
@@ -20,6 +19,7 @@ contract Test {
         state = "constructor";
     }
 
+    // solrun will auto call this function 
     function main() external {
         emit Log(state);
         if (2 > 1) emit Log("failed");
