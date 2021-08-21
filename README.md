@@ -3,7 +3,8 @@ Command line tool for run solidity contract locally. based on [ethereumjs-vm](ht
 
 ## Example
 - default solc complier version is `0.6.12`  
-`test.sol`
+
+### test.sol
 ``` solidity
 contract Main {
     event Log(string);
@@ -26,11 +27,12 @@ contract Main {
 }
 ```
 
+### Run
 ``` shell
 solrun test.sol
 ```
 
-Output:
+### Output
 ``` bash
 Log(failed)
 Log(hello world)
