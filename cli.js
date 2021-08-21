@@ -51,7 +51,7 @@ async function deployContract(vm, senderPrivateKey, deploymentBytecode) {
   const params = AbiCoder.encode([], []);
   const txData = {
     value: 0,
-    gasLimit: 2000000, // We assume that 2M is enough,
+    gasLimit: 20000000, // We assume that 2M is enough,
     gasPrice: 1,
     data: "0x" + deploymentBytecode.toString("hex") + params.slice(2),
     nonce: await getAccountNonce(vm, senderPrivateKey),
@@ -80,7 +80,7 @@ async function runCode(contract) {
   // console.log('Account: ', accountAddress.toString())
   const acctData = {
     nonce: 0,
-    balance: new BN(100).pow(new BN(18)), // 1 eth
+    balance: new BN(10000).pow(new BN(18)), // 1 eth
   };
 
   const account = Account.fromAccountData(acctData);
@@ -98,8 +98,6 @@ async function runCode(contract) {
   vm.on("afterMessage", function (data) {
     // console.log('afterMessage', data)
   });
-
-  const caller = accountAddress;
 
   const params = AbiCoder.encode([], []);
   const sigHash = new Interface(["function main()"]).getSighash("main");
@@ -150,9 +148,9 @@ async function runCode(contract) {
   });
 
   runResult.execResult.logs.forEach((l) =>
-    // console.log(l.log, l.event.uid, l.topics)
     console.log(l.log)
   );
+  console.log("gasUsed:", runResult.gasUsed.toNumber());
 }
 
 const fs = require("fs");
@@ -204,7 +202,7 @@ async function runContract(filename, opts) {
   const conrtactData = allContractsInFile[runCountractName];
   if (conrtactData) {
     // console.log(sources, output);
-    runCode(conrtactData);
+    await runCode(conrtactData);
   } else {
     throw new Error("countract not found");
   }
@@ -219,7 +217,7 @@ program
     try {
       await runContract(filename, opts);
     } catch (e) {
-      console.log("failed", e.toString());
+      console.log("failed", e);
     }
 
     // console.log('clone command called', filename);
