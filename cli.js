@@ -99,7 +99,7 @@ async function runCode(contract) {
   const caller = accountAddress;
 
   const params = AbiCoder.encode([], []);
-  const sigHash = new Interface(["function run()"]).getSighash("run");
+  const sigHash = new Interface(["function main()"]).getSighash("main");
   const txData = {
     to: contractAddress,
     value: 0,

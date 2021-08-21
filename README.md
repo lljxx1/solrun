@@ -9,8 +9,8 @@ Let's take a look!
 ### test.sol
 ``` solidity
 
-contract Main {
-    
+contract Test {
+
     event Log(string);
     event Test(string, string);
 
@@ -20,7 +20,7 @@ contract Main {
         state = "constructor";
     }
 
-    function run() external {
+    function main() external {
         emit Log(state);
         if (2 > 1) emit Log("failed");
         emit Log("hello world");
