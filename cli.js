@@ -119,10 +119,7 @@ async function runCode(contract) {
 
   // const results = AbiCoder.decode(['string'], runResult.execResult.returnValue)
   // return results[0]
-  const log = runResult.execResult.logs[2];
-  const [to, topics , data ] = log;
   const eventABI = contract.abi.filter(_ => _.type == 'event').map(_ => {
-
     _.types = _.inputs.map(c => c.type);
     const func = _.inputs.map(c => c.type).join(',');
     const fn = `${_.name}(${func})`;
@@ -131,9 +128,9 @@ async function runCode(contract) {
     return _;
   });
 
-
+  // console.log("eventABI", eventABI);
   runResult.execResult.logs = runResult.execResult.logs.map((_) => {
-    const [to, topics, data] = log;
+    const [to, topics, data] = _;
     let tps = topics.map((_) => _.toString("hex"));
     const matchEvent = eventABI.filter((_) => tps.indexOf(_.uid) > -1)[0];
     const parsed = AbiCoder.decode(matchEvent.types, data);
@@ -142,24 +139,18 @@ async function runCode(contract) {
       to: new Address(to).toString(),
       topics: tps,
       data: parsed,
+      log: [matchEvent.name, "(", parsed.join(', '), ")"].join(""),
     };
   });
-
-//   console.log(
-//     contractAddress,
-//     new Address(to).toString(),
-//     eventABI[1],
-//     AbiCoder.decode(["string", "string"], data),
-//     topics.map((_) => _.toString('hex'))
-//   );
-
-
-console.log(runResult.execResult.logs);
+  runResult.execResult.logs.forEach((l) =>
+    // console.log(l.log, l.event.uid, l.topics)
+    console.log(l.log)
+  );
 }
 
 // const bytecode = output.contracts[mainFile].Main.evm.bytecode.object;
 // runCode(output.contracts[mainFile].Main);
-
+// console.log(VM)
 
 
 const fs = require('fs');
@@ -186,7 +177,11 @@ async function runContract(filename, opts) {
   }
 
   if (!output.contracts) {
-    console.log(output.errors.filter((_) => _.severity == 'error'));
+    console.log(
+      output.errors
+        .filter((_) => _.severity == "error")
+        .forEach((_) => console.log(_.formattedMessage))
+    );
     process.exit();
   }
 
