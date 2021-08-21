@@ -1,8 +1,7 @@
 
 contract Test {
-
+    
     event Log(string);
-    event Test(string, string);
 
     string public state;
 
@@ -10,15 +9,22 @@ contract Test {
         state = "constructor";
     }
 
-    // solrun will auto call this function 
+    // solrun will auto call this main function 
     function main() external {
         emit Log(state);
         if (2 > 1) emit Log("failed");
         emit Log("hello world");
-        emit Test("Abc", "ad");
-        state = "fuck";
+        setState("set newSate");
         string memory curSate = getState();
-        emit Test("now state is", curSate);
+        emit Log(
+            string(
+                abi.encodePacked("state:", curSate)
+            )
+        );
+    }
+
+    function setState(string memory newState) public {
+        state = newState;
     }
 
     function getState() public view returns (string memory) {

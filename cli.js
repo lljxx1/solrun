@@ -140,18 +140,15 @@ async function runCode(contract) {
       to: new Address(to).toString(),
       topics: tps,
       data: parsed,
-      log: [matchEvent.name, "(", parsed.join(", "), ")"].join(""),
+      log: [matchEvent.name, "(", parsed.map(_ => JSON.stringify(_)).join(", "), ")"].join(""),
     };
   });
+
   runResult.execResult.logs.forEach((l) =>
     // console.log(l.log, l.event.uid, l.topics)
     console.log(l.log)
   );
 }
-
-// const bytecode = output.contracts[mainFile].Main.evm.bytecode.object;
-// runCode(output.contracts[mainFile].Main);
-// console.log(VM)
 
 const fs = require("fs");
 const path = require("path");
@@ -160,10 +157,7 @@ async function runContract(filename, opts) {
   const sources = {};
   const baseDir = process.cwd();
   const countractFile = path.resolve(baseDir, filename);
-
-  
-
-  console.log("baseDir", baseDir, countractFile);
+  // console.log("baseDir", baseDir, countractFile);
   // const mainFile = pro
   sources[filename] = {
     content: fs.readFileSync(countractFile).toString("utf8"),
