@@ -1,5 +1,5 @@
 # solrun
-Command line tool for run solidity contract. based on [ethereumjs-vm](https://www.npmjs.com/package/ethereumjs-vm) and [soljson.js](https://github.com/ethereum/solc-bin)
+Command-line tool for run solidity contract. based on [ethereumjs-vm](https://www.npmjs.com/package/ethereumjs-vm) and [soljson.js](https://github.com/ethereum/solc-bin)
 
 - default solc complier version is `0.6.12`  
 
