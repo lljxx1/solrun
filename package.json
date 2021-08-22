@@ -4,7 +4,13 @@
   "email": "lljxx1@gmail.com",
   "description": "Command line tool for run solidity contract locally. based on ethereumjs-vm and soljson.js",
   "license": "ISC",
-  "keywords": "Solidity EVM",
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "contracts",
+    "evm",
+    "interpreter"
+  ],
   "bin": {
     "solrun": "bin/solrun.js"
   },
