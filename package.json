@@ -2,7 +2,7 @@
   "name": "solrun",
   "version": "0.0.4",
   "email": "lljxx1@gmail.com",
-  "description": "Command line tool for run solidity contract. Interpreter based on ethereumjs-vm",
+  "description": "Command-line tool for run solidity contract. Interpreter based on ethereumjs-vm",
   "license": "ISC",
   "keywords": [
     "solidity",
