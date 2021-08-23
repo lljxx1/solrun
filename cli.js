@@ -95,8 +95,8 @@ async function runCode(contract) {
   const contractAddress = await deployContract(vm, accountPk, bytecode);
   //  console.log("Contract: ", contractAddress.toString());
 
-  vm.on("afterMessage", function (data) {
-    // console.log('afterMessage', data)
+  vm.on("afterTx", function (data) {
+    // console.log('afterTx', data)
   });
 
   const params = AbiCoder.encode([], []);
@@ -114,6 +114,7 @@ async function runCode(contract) {
   const runResult = await vm.runTx({ tx });
 
   if (runResult.execResult.exceptionError) {
+    console.log(runResult.execResult.returnValue.slice(10, -1).toString());
     throw runResult.execResult.exceptionError;
   }
 
