@@ -90,6 +90,7 @@ Log(state:set newSate)
 
 ## Roadamp
 - [x] Run contract  
+- [x] Support display `require` message
 - [ ] Support `import`  
 - [ ] Call specify Contract and method
 - [ ] Multiple method call
