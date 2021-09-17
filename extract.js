@@ -7,6 +7,41 @@ const Pubkey = "solana_program::pubkey::Pubkey";
 
 // function getPunctuated(d) {}
 
+function getFieldTyp(ty) {
+  if (ty._type == "TypeArray") {
+    return [
+      [ty.elem.path.segments[0].ident.to_string,  ty.len.lit.digits].join(';')
+    ];
+  };
+  const type = ty.path;
+  const fieldType = [];
+
+  if (type.segments) {
+    for (let index = 0; index < type.segments.length; index++) {
+      const typeDef = type.segments[index];
+      fieldType.push(typeDef.ident.to_string);
+
+      if (
+        typeDef.arguments &&
+        typeDef.arguments._type == "AngleBracketedGenericArguments"
+      ) {
+        // console.log(typeDef.arguments);
+        for (let index = 0; index < typeDef.arguments.args.length; index++) {
+          const arg = typeDef.arguments.args[index];
+          for (let index = 0; index < arg.path.segments.length; index++) {
+            const innerType = arg.path.segments[index];
+            fieldType.push(innerType.ident.to_string);
+          }
+        }
+
+        break;
+      }
+      // console.log("seg", typeDef, typeDef.ident.to_string);
+    }
+  }
+  return fieldType;
+}
+
 function getStruct(structDef) {
   const name = structDef.ident.to_string;
   const isPub = structDef.vis._type == "VisPublic";
@@ -134,7 +169,27 @@ function parseEnum(itemEnum) {
     } else {
     }
 
-    console.log(variant);
+    const namedFileds = variant.fields.named;
+    const fields = [];
+
+    if (namedFileds) {
+      for (let index = 0; index < namedFileds.length; index++) {
+        const namedFiled = namedFileds[index];
+        if (namedFiled._type != "Field") continue;
+        const fieldName = namedFiled.ident && namedFiled.ident.to_string;
+        const fieldType = getFieldTyp(namedFiled.ty);
+        fields.push({
+          fieldName,
+          fieldType,
+        });
+        // console.log(enumName, {
+        //   fieldName,
+        // });
+      }
+    }
+
+    console.log(enumName, fields);
+
     enumInstructions.push({
       instructionCode: insCode,
       instructionName: {
@@ -184,7 +239,7 @@ function parseAST(ast) {
   const implInsts = new Map();
   const enumInstructions = new Map();
 
-  let allStructs = []
+  let allStructs = [];
   let implEnum = null;
   let allEnumInstructions = null;
 
@@ -237,5 +292,5 @@ function parseAST(ast) {
 
 // parseAST(ast);
 module.exports = {
-    parseAST
-}
+  parseAST,
+};
