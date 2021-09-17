@@ -1,14 +1,20 @@
 # solrun
-Command-line tool for run solidity contract. based on [ethereumjs-vm](https://www.npmjs.com/package/ethereumjs-vm) and [soljson.js](https://github.com/ethereum/solc-bin)
+toolstack for blockchain projects
 
-- default solc complier version is `0.6.12`  
+- solrun Run Solidity Contract 
+- solabi Parse ABI from Solana program's code
 
 ## Install
 ``` shell
 npm install solrun -g
 ```
 
-## Usage
+## solrun
+
+- default solc complier version is `0.6.12`  
+
+
+### Usage
 ``` shell
 solrun test.sol
 ```
