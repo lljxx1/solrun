@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { program } = require("commander");
 const syn = require('./syn');
+const { parseAST } = require('./extract');
 // const wasm = require('./syn/astexplorer_syn_bg.wasm');
 
 async function gen(filename, opts) {
@@ -12,11 +13,10 @@ async function gen(filename, opts) {
   const rustCode = fs.readFileSync(mainFile, 'utf-8');
   const wasm = WebAssembly.compile(fs.readFileSync(__dirname + '/syn/astexplorer_syn_bg.wasm'));
   await syn.init(wasm);
-
   const result = await syn.parseFile(rustCode);
-  console.log(result)
-  fs.writeFileSync(`${mainFile}_parsed.json`, JSON.stringify(result, null, 2))
-
+  const parsedABI = parseAST(result);
+  console.log(parsedABI);
+  fs.writeFileSync(`${mainFile}_ABI.json`, JSON.stringify(parsedABI, null, 2));
 }
 
 program

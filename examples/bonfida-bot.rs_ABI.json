@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "hasInstruction": true,
+    "hasAccountMeta": true,
+    "hasProgramError": true
+  },
+  "structs": {},
+  "implInsts": {},
+  "enumInstructions": {},
+  "allEnumInstructions": {
+    "enumName": "PoolInstruction",
+    "enumInstructions": [
+      {
+        "instructionCode": 0,
+        "instructionName": {
+          "name": "Init",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 1,
+        "instructionName": {
+          "name": "Create",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 2,
+        "instructionName": {
+          "name": "Deposit",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 3,
+        "instructionName": {
+          "name": "CreateOrder",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 4,
+        "instructionName": {
+          "name": "CancelOrder",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 5,
+        "instructionName": {
+          "name": "SettleFunds",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 6,
+        "instructionName": {
+          "name": "Redeem",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 7,
+        "instructionName": {
+          "name": "CollectFees",
+          "struct": null
+        }
+      }
+    ]
+  },
+  "allStructs": []
+}

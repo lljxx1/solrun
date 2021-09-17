@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "hasInstruction": true,
+    "hasAccountMeta": true,
+    "hasProgramError": true
+  },
+  "structs": {},
+  "implInsts": {},
+  "enumInstructions": {},
+  "allEnumInstructions": {
+    "enumName": "AmmInstruction",
+    "enumInstructions": [
+      {
+        "instructionCode": 0,
+        "instructionName": {
+          "name": "Initialize",
+          "struct": "InitializeInstruction"
+        }
+      },
+      {
+        "instructionCode": 1,
+        "instructionName": {
+          "name": "Initialize2",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 2,
+        "instructionName": {
+          "name": "MonitorStep",
+          "struct": "MonitorStepInstruction"
+        }
+      },
+      {
+        "instructionCode": 3,
+        "instructionName": {
+          "name": "Deposit",
+          "struct": "DepositInstruction"
+        }
+      },
+      {
+        "instructionCode": 4,
+        "instructionName": {
+          "name": "Withdraw",
+          "struct": "WithdrawInstruction"
+        }
+      },
+      {
+        "instructionCode": 5,
+        "instructionName": {
+          "name": "WithdrawTransfer",
+          "struct": "WithdrawTransferInstruction"
+        }
+      },
+      {
+        "instructionCode": 6,
+        "instructionName": {
+          "name": "SetParams",
+          "struct": "SetParamsInstruction"
+        }
+      },
+      {
+        "instructionCode": 7,
+        "instructionName": {
+          "name": "WithdrawPnl",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 8,
+        "instructionName": {
+          "name": "WithdrawSrm",
+          "struct": "WithdrawSrmInstruction"
+        }
+      },
+      {
+        "instructionCode": 9,
+        "instructionName": {
+          "name": "Swap",
+          "struct": "SwapInstruction"
+        }
+      },
+      {
+        "instructionCode": 10,
+        "instructionName": {
+          "name": "PreInitialize",
+          "struct": "InitializeInstruction"
+        }
+      }
+    ]
+  },
+  "allStructs": [
+    {
+      "name": "InitializeInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "nonce",
+          "isPub": true,
+          "fieldType": [
+            "u8"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MonitorStepInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "plan_order_limit",
+          "isPub": true,
+          "fieldType": [
+            "u16"
+          ]
+        },
+        {
+          "name": "place_order_limit",
+          "isPub": true,
+          "fieldType": [
+            "u16"
+          ]
+        },
+        {
+          "name": "cancel_order_limit",
+          "isPub": true,
+          "fieldType": [
+            "u16"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DepositInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "max_coin_amount",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        },
+        {
+          "name": "max_pc_amount",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        },
+        {
+          "name": "base_side",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WithdrawInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "amount",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WithdrawTransferInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "limit",
+          "isPub": true,
+          "fieldType": [
+            "u16"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SetParamsInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "param",
+          "isPub": true,
+          "fieldType": [
+            "u8"
+          ]
+        },
+        {
+          "name": "value",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "u64"
+          ]
+        },
+        {
+          "name": "new_pubkey",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "Pubkey"
+          ]
+        },
+        {
+          "name": "fees",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "Fees"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WithdrawSrmInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "amount",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SwapInstruction",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "amount_in",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        },
+        {
+          "name": "minimum_amount_out",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        }
+      ]
+    }
+  ]
+}
