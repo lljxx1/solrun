@@ -12,7 +12,8 @@
     "interpreter"
   ],
   "bin": {
-    "solrun": "bin/solrun.js"
+    "solrun": "bin/solrun.js",
+    "solabi": "bin/solabi.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "@ethereumjs/tx": "^3.3.0",
     "@ethereumjs/vm": "^5.5.2",
     "@ethersproject/abi": "^5.4.0",
+    "astexplorer-syn": "^1.0.57",
     "commander": "^8.1.0",
     "ethereumjs-util": "^7.1.0",
     "solc": "^0.8.7-fixed"
