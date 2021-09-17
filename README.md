@@ -1,8 +1,8 @@
 # solrun
 toolstack for blockchain projects
 
-- solrun Run Solidity Contract 
-- solabi Parse ABI from Solana program's code
+- `solrun` Run Solidity Contract 
+- `solabi` Parse ABI from Solana program's code
 
 ## Install
 ``` shell
