@@ -535,15 +535,21 @@ function getFn(fn) {
   return result;
 }
 
+const aliasType = {
+    'NonZeroU64': 'u64',
+    'NonZeroU16': 'u16',
+}
 
 function normalizeInput(inputs) {
   // inputs.for
   return inputs.map(_ => {
+    const fType =
+      _.fieldType && _.fieldType.filter((_) => _ != "Vec" && _ != "Option")[0];
     return {
       name: _.fieldName,
       // ..._,
-      type: _.fieldType && _.fieldType.filter(_ => _ != 'Vec' && _ != 'Option')[0]
-    }
+      type: aliasType[fType] ? aliasType[fType] : fType,
+    };
   })
 }
 
@@ -670,7 +676,6 @@ function parseAST(ast) {
       }
     }
 
-
     if (instruction.inputs) {
       instruction.inputs = normalizeInput(instruction.inputs);
     }
@@ -686,7 +691,7 @@ function parseAST(ast) {
   console.log(instructions);
   return {
     instructions,
-    raw: parsedABI
+    // raw: parsedABI
   };
 }
 
