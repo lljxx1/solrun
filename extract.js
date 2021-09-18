@@ -7,16 +7,33 @@ const Pubkey = "solana_program::pubkey::Pubkey";
 
 // function getPunctuated(d) {}
 
+
+function getPathName(path) {
+  const pathNames = []
+  for (let index = 0; index < path.segments.length; index++) {
+    const innerType = path.segments[index];
+    if (innerType._type == 'PathSegment') {
+      pathNames.push(innerType.ident.to_string);
+    }
+    if (innerType._type == 'Colon2') {
+      pathNames.push('::');
+    }
+    // fieldType.push(innerType.ident.to_string);
+  }
+
+  return pathNames;
+}
+
 function getFieldTyp(ty) {
   if (ty._type == "TypeArray") {
     return [
-      [ty.elem.path.segments[0].ident.to_string,  ty.len.lit.digits].join(';')
+      [ty.elem.path.segments[0].ident.to_string, ty.len.lit.digits].join(';')
     ];
   };
-  const type = ty.path;
+  const type = ty.path ? ty.path : ty.elem.path;
   const fieldType = [];
 
-  if (type.segments) {
+  if (type && type.segments) {
     for (let index = 0; index < type.segments.length; index++) {
       const typeDef = type.segments[index];
       fieldType.push(typeDef.ident.to_string);
@@ -30,8 +47,7 @@ function getFieldTyp(ty) {
           const arg = typeDef.arguments.args[index];
 
           if (!arg.path) {
-            // for()
-            console.log(arg)
+            // console.log(arg)
             continue;
           }
 
@@ -107,7 +123,7 @@ function getStruct(structDef) {
   //     console.log(fieldDef);
   //   });
 
-  console.log(struct.name, struct.fields);
+  // console.log(struct.name, struct.fields);
   return struct;
 }
 
@@ -142,10 +158,10 @@ function parseImpl(implStruct) {
     const instructionCode = arm.pat.expr ? arm.pat.expr.lit.digits : null;
     const instructionStruct = null;
     const lastExprCall = arm.body.block.stmts[arm.body.block.stmts.length - 1];
-    const callExprStruct = lastExprCall.args && lastExprCall.args[0];
+    const callExprStruct = lastExprCall._type == 'ExprStruct' ? lastExprCall : lastExprCall.args && lastExprCall.args[0];
     const callExprStructName =
-      callExprStruct && callExprStruct.path.segments[0].ident.to_string;
-    // console.log(callExprStructName, instructionCode);
+      callExprStruct && getPathName(callExprStruct.path).join("");
+    // console.log(callExprStructName, instructionCode, lastExprCall);
     allInstructions.push({
       instructionCode,
       instructionName: callExprStructName,
@@ -195,10 +211,11 @@ function parseEnum(itemEnum) {
       }
     }
 
-    console.log(enumName, fields);
+    // console.log(enumName, fields);
 
     enumInstructions.push({
       instructionCode: insCode,
+      fields,
       instructionName: {
         name: enumName,
         struct: instructionName,
@@ -211,93 +228,166 @@ function parseEnum(itemEnum) {
   return {
     enumName,
     enumInstructions,
+    // fields
   };
 }
 
-
-function getTypePath(tp) {
-
-    const path = tp.path;
-
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-        
-    }
-
-}
-
 function getFn(fn) {
-    const funName = fn.sig.ident.to_string
-    const outputTypePath = getFieldTyp(fn.sig.output[1]);
-    const lastExprCall = fn.block.stmts[fn.block.stmts.length - 1];
-    const localVars = [];
+  const funName = fn.sig.ident.to_string
+  const outputTypePath = getFieldTyp(fn.sig.output[1]);
+  // const lastExprCall = fn.block.stmts[fn.block.stmts.length - 1];
+  const localVars = [];
+  const inputs = [];
+  const inputsDef = fn.sig.inputs;
 
-    for (let index = 0; index < fn.block.stmts.length; index++) {
-      const blockItem = fn.block.stmts[index];
+  for (let index = 0; index < inputsDef.length; index++) {
+    const input = inputsDef[index];
+    if (input._type != 'PatType') continue;
+    const varName = input.pat.ident.to_string
+    const filedType = getFieldTyp(input.ty);
+    // console.log(input);
+    localVars.push({
+      isArg: true,
+      name: varName,
+      filedType: filedType.join('')
+    })
+  }
 
-      if (blockItem._type == 'Local') {
-          const name = blockItem.pat.ident.to_string
 
-          if (name == "accounts") {
-            const vecExpMacro = blockItem.init[1];
-            const accounts = vecExpMacro.mac;
-            const lines = []
-            let idents = [];
+  const instDataName = 'data';
 
-            for (
-              let index = 0;
-              index < vecExpMacro.mac.tokens.length;
-              index++
-            ) {
-              const token = vecExpMacro.mac.tokens[index];
-              const str = token.to_string ? token.to_string : token.as_char;
-             
-              idents.push(str);
-              if (token._type == "Group") {
-                idents.push('(')
-                for (let index = 0; index < token.stream.length; index++) {
-                  const element = token.stream[index];
-                   const str = element.to_string
-                     ? element.to_string
-                     : element.as_char;
-                  idents.push(str);
-                }
+  for (let index = 0; index < fn.block.stmts.length; index++) {
+    const blockItem = fn.block.stmts[index];
+    if (blockItem._type == 'Local') {
+      if (blockItem.pat._type != 'PatIdent') {
+        // console.log('pat', blockItem)
+        continue
+      };
+      const name = blockItem.pat.ident.to_string
+      const varItems = [];
+      if (name == instDataName) {
+        const exprMethodCall = blockItem.init[1];
 
-                idents.push(")");
-                //   console.log(token.stream);
-              }
-
-              if (token._type == 'Punct' && token.as_char == ',') {
-                lines.push(idents);
-                idents = []
-              }
-
-            //   console.log({
-            //     idents,
-            //   });
-            }
-            console.log({
-              lines,
-            });
+        if (exprMethodCall._type == 'ExprTry') {
+          // let data = AmmInstruction::WithdrawSrm(WithdrawSrmInstruction{amount}).pack()?;
+          if (exprMethodCall.expr.receiver.func) {
+            varItems.push(
+              getPathName(exprMethodCall.expr.receiver.func.path).join('')
+            )
           }
 
-        localVars.push({
-          name,
-        //   lines,
-        });
+          // let data = AmmInstruction::WithdrawPnl.pack()?;
+          if (exprMethodCall.expr.receiver.path) {
+            varItems.push(
+              getPathName(exprMethodCall.expr.receiver.path).join('')
+            )
+          }
+        } else if (exprMethodCall.receiver) {
 
+          // let data = PoolInstruction::Deposit {
+          //     pool_seed,
+          //     pool_token_amount,
+          // }
+          // .pack();
+          varItems.push(
+            getPathName(exprMethodCall.receiver.path).join('')
+          )
+        }
       }
+
+      // console.log('Local', name)
+      if (name == "accounts") {
+        const vecExpMacro = blockItem.init[1];
+        // const accounts = vecExpMacro.mac;
+        // const lines = []
+        let idents = [];
+        for (
+          let index = 0;
+          index < vecExpMacro.mac.tokens.length;
+          index++
+        ) {
+          const token = vecExpMacro.mac.tokens[index];
+          const str = token.to_string ? token.to_string : token.as_char;
+
+          idents.push(str);
+          if (token._type == "Group") {
+            idents.push('(')
+            for (let index = 0; index < token.stream.length; index++) {
+              const element = token.stream[index];
+              const str = element.to_string
+                ? element.to_string
+                : element.as_char;
+              idents.push(str);
+            }
+
+            idents.push(")");
+            //   console.log(token.stream);
+          }
+
+          if (token._type == 'Punct' && token.as_char == ',') {
+            varItems.push(idents);
+            idents = []
+          }
+        }
+      }
+      localVars.push({
+        name,
+        varItems
+        //   lines,
+      });
+
     }
+  }
 
 
+  const accountsVar = localVars.find(_ => _.name == "accounts")
+  const dataVar = localVars.find(_ => _.name == "data")
 
+  const isInstructionFn = outputTypePath.indexOf('Instruction') > -1;
 
-    console.log({
+  const refInstruction = dataVar && dataVar.varItems && dataVar.varItems[0];
+  const accounts = accountsVar && accountsVar.varItems.map(_ => {
+    // const pairs =  _.split('AccountMeta::new');
+    const isAccount = _[0] == 'AccountMeta';
+    const isReadonly = _[3] == 'new_readonly';
+    const isNew = _[3] == 'new';
+    const nameOffset = _[6] == '*' ? 7 : 6;
+    const name = _[nameOffset];
+    const isSigner = _[nameOffset + 2] == 'true';
+    // const 
+    // const accountName = pairs;
+    return {
+      isAccount,
+      isReadonly,
+      name,
+      isSigner
+      // func: _[3]
+    }
+  })
+
+  console.log(funName, {
+    localVars, 
+    accounts, 
+    accountsVar
+  })
+
+  const result = {
+    name: funName,
+    isInstructionFn,
+    refInstruction: refInstruction,
+    accounts,
+    localVars,
+    meta: {
       outputTypePath,
       funName,
       localVars,
-      lastExprCall,
-    });
+      accountsVar,
+      dataVar
+    }
+    // lastExprCall,
+  }
+  // console.log(result);
+  return result;
 }
 
 function parseAST(ast) {
@@ -335,6 +425,7 @@ function parseAST(ast) {
   let allStructs = [];
   let implEnum = null;
   let allEnumInstructions = null;
+  let allFucs = []
 
   ast.items.forEach((item) => {
     if (item._type == "ItemUse") {
@@ -365,7 +456,8 @@ function parseAST(ast) {
     }
 
     if (item._type == 'ItemFn') {
-        const fn = getFn(item);
+      const fn = getFn(item);
+      allFucs.push(fn);
     }
   });
 
@@ -374,16 +466,19 @@ function parseAST(ast) {
   const hasProgramError = useTypes.has(ProgramError);
   //   const hasAccountMeta = useTypes.has(AccountMeta);
   const parsedABI = {
+    use: Array.from(useTypes),
     meta: { hasInstruction, hasAccountMeta, hasProgramError },
     structs,
+    implEnum,
     implInsts,
     enumInstructions,
     allEnumInstructions,
     allStructs,
     allEnumInstructions,
+    allFucs
   };
 
-  console.log(parsedABI);
+  // console.log(parsedABI);
   return parsedABI;
 }
 

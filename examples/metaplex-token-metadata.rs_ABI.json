@@ -1,0 +1,3083 @@
+{
+  "use": [
+    "crate::deprecated_instruction::MintPrintingTokensViaTokenArgs",
+    "crate::deprecated_instruction",
+    "crate::deprecated_instruction::SetReservationListArgs",
+    "crate::state::Creator",
+    "crate::state",
+    "crate::state::Data",
+    "crate::state::EDITION",
+    "crate::state::EDITION_MARKER_BIT_SIZE",
+    "crate::state::PREFIX",
+    "borsh::BorshDeserialize",
+    "borsh::BorshSerialize",
+    "solana_program::instruction::AccountMeta",
+    "solana_program::instruction",
+    "solana_program::instruction::Instruction",
+    "solana_program::pubkey::Pubkey",
+    "solana_program::sysvar"
+  ],
+  "meta": {
+    "hasInstruction": true,
+    "hasAccountMeta": true,
+    "hasProgramError": false
+  },
+  "structs": {},
+  "implEnum": null,
+  "implInsts": {},
+  "enumInstructions": {},
+  "allEnumInstructions": {
+    "enumName": "MetadataInstruction",
+    "enumInstructions": [
+      {
+        "instructionCode": 0,
+        "fields": [],
+        "instructionName": {
+          "name": "CreateMetadataAccount",
+          "struct": "CreateMetadataAccountArgs"
+        }
+      },
+      {
+        "instructionCode": 1,
+        "fields": [],
+        "instructionName": {
+          "name": "UpdateMetadataAccount",
+          "struct": "UpdateMetadataAccountArgs"
+        }
+      },
+      {
+        "instructionCode": 2,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedCreateMasterEdition",
+          "struct": "CreateMasterEditionArgs"
+        }
+      },
+      {
+        "instructionCode": 3,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedMintNewEditionFromMasterEditionViaPrintingToken",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 4,
+        "fields": [],
+        "instructionName": {
+          "name": "UpdatePrimarySaleHappenedViaToken",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 5,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedSetReservationList",
+          "struct": "SetReservationListArgs"
+        }
+      },
+      {
+        "instructionCode": 6,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedCreateReservationList",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 7,
+        "fields": [],
+        "instructionName": {
+          "name": "SignMetadata",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 8,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedMintPrintingTokensViaToken",
+          "struct": "MintPrintingTokensViaTokenArgs"
+        }
+      },
+      {
+        "instructionCode": 9,
+        "fields": [],
+        "instructionName": {
+          "name": "DeprecatedMintPrintingTokens",
+          "struct": "MintPrintingTokensViaTokenArgs"
+        }
+      },
+      {
+        "instructionCode": 10,
+        "fields": [],
+        "instructionName": {
+          "name": "CreateMasterEdition",
+          "struct": "CreateMasterEditionArgs"
+        }
+      },
+      {
+        "instructionCode": 11,
+        "fields": [],
+        "instructionName": {
+          "name": "MintNewEditionFromMasterEditionViaToken",
+          "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
+        }
+      },
+      {
+        "instructionCode": 12,
+        "fields": [],
+        "instructionName": {
+          "name": "ConvertMasterEditionV1ToV2",
+          "struct": null
+        }
+      },
+      {
+        "instructionCode": 13,
+        "fields": [],
+        "instructionName": {
+          "name": "MintNewEditionFromMasterEditionViaVaultProxy",
+          "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
+        }
+      },
+      {
+        "instructionCode": 14,
+        "fields": [],
+        "instructionName": {
+          "name": "PuffMetadata",
+          "struct": null
+        }
+      }
+    ]
+  },
+  "allStructs": [
+    {
+      "name": "UpdateMetadataAccountArgs",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "data",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "Data"
+          ]
+        },
+        {
+          "name": "update_authority",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "Pubkey"
+          ]
+        },
+        {
+          "name": "primary_sale_happened",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "bool"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CreateMetadataAccountArgs",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "data",
+          "isPub": true,
+          "fieldType": [
+            "Data"
+          ]
+        },
+        {
+          "name": "is_mutable",
+          "isPub": true,
+          "fieldType": [
+            "bool"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CreateMasterEditionArgs",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "max_supply",
+          "isPub": true,
+          "fieldType": [
+            "Option",
+            "u64"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MintNewEditionFromMasterEditionViaTokenArgs",
+      "isPub": true,
+      "fields": [
+        {
+          "name": "edition",
+          "isPub": true,
+          "fieldType": [
+            "u64"
+          ]
+        }
+      ]
+    }
+  ],
+  "allFucs": [
+    {
+      "name": "create_metadata_accounts",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata_account",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "mint",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "mint_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "payer",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "update_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "name",
+          "filedType": "String"
+        },
+        {
+          "isArg": true,
+          "name": "symbol",
+          "filedType": "String"
+        },
+        {
+          "isArg": true,
+          "name": "uri",
+          "filedType": "String"
+        },
+        {
+          "isArg": true,
+          "name": "creators",
+          "filedType": "OptionVec"
+        },
+        {
+          "isArg": true,
+          "name": "seller_fee_basis_points",
+          "filedType": "u16"
+        },
+        {
+          "isArg": true,
+          "name": "update_authority_is_signer",
+          "filedType": "bool"
+        },
+        {
+          "isArg": true,
+          "name": "is_mutable",
+          "filedType": "bool"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "create_metadata_accounts",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata_account",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "mint",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "mint_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "payer",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "update_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "name",
+            "filedType": "String"
+          },
+          {
+            "isArg": true,
+            "name": "symbol",
+            "filedType": "String"
+          },
+          {
+            "isArg": true,
+            "name": "uri",
+            "filedType": "String"
+          },
+          {
+            "isArg": true,
+            "name": "creators",
+            "filedType": "OptionVec"
+          },
+          {
+            "isArg": true,
+            "name": "seller_fee_basis_points",
+            "filedType": "u16"
+          },
+          {
+            "isArg": true,
+            "name": "update_authority_is_signer",
+            "filedType": "bool"
+          },
+          {
+            "isArg": true,
+            "name": "is_mutable",
+            "filedType": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "update_metadata_accounts",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata_account",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "update_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_update_authority",
+          "filedType": "OptionPubkey"
+        },
+        {
+          "isArg": true,
+          "name": "data",
+          "filedType": "OptionData"
+        },
+        {
+          "isArg": true,
+          "name": "primary_sale_happened",
+          "filedType": "Optionbool"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "update_metadata_accounts",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata_account",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "update_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_update_authority",
+            "filedType": "OptionPubkey"
+          },
+          {
+            "isArg": true,
+            "name": "data",
+            "filedType": "OptionData"
+          },
+          {
+            "isArg": true,
+            "name": "primary_sale_happened",
+            "filedType": "Optionbool"
+          }
+        ],
+        "dataVar": {
+          "isArg": true,
+          "name": "data",
+          "filedType": "OptionData"
+        }
+      }
+    },
+    {
+      "name": "puff_metadata_account",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata_account",
+          "filedType": "Pubkey"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "puff_metadata_account",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata_account",
+            "filedType": "Pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "update_primary_sale_happened_via_token",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "owner",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "token",
+          "filedType": "Pubkey"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "update_primary_sale_happened_via_token",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "owner",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "token",
+            "filedType": "Pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "create_master_edition",
+      "isInstructionFn": true,
+      "accounts": [
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "edition",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "mint",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "update_authority",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "mint_authority",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "payer",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "metadata",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "spl_token",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "solana_program",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "sysvar",
+          "isSigner": false
+        }
+      ],
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "mint",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "update_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "mint_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "payer",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "max_supply",
+          "filedType": "Optionu64"
+        },
+        {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "update_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "spl_token",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "create_master_edition",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "mint",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "update_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "mint_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "payer",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "max_supply",
+            "filedType": "Optionu64"
+          },
+          {
+            "name": "accounts",
+            "varItems": [
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "edition",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "mint",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "update_authority",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "mint_authority",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "payer",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "metadata",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "spl_token",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "solana_program",
+                ":",
+                ":",
+                "system_program",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "sysvar",
+                ":",
+                ":",
+                "rent",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ]
+            ]
+          }
+        ],
+        "accountsVar": {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "update_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "spl_token",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "mint_new_edition_from_master_edition_via_token",
+      "isInstructionFn": true,
+      "accounts": [
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_metadata",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_edition",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "master_edition",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_mint",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "edition_mark_pda",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "new_mint_authority",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "payer",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "token_account_owner",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "token_account",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "new_metadata_update_authority",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "metadata",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "spl_token",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "solana_program",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "sysvar",
+          "isSigner": false
+        }
+      ],
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "master_edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_mint",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_mint_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "payer",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "token_account_owner",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "token_account",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_metadata_update_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata_mint",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "edition",
+          "filedType": "u64"
+        },
+        {
+          "name": "edition_number",
+          "varItems": []
+        },
+        {
+          "name": "as_string",
+          "varItems": []
+        },
+        {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "master_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition_mark_pda",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_account_owner",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_account",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_metadata_update_authority",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "spl_token",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "mint_new_edition_from_master_edition_via_token",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "master_edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_mint",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_mint_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "payer",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "token_account_owner",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "token_account",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_metadata_update_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata_mint",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "edition",
+            "filedType": "u64"
+          },
+          {
+            "name": "edition_number",
+            "varItems": []
+          },
+          {
+            "name": "as_string",
+            "varItems": []
+          },
+          {
+            "name": "accounts",
+            "varItems": [
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_metadata",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_edition",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "master_edition",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_mint",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "edition_mark_pda",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "new_mint_authority",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "payer",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "token_account_owner",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "token_account",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "new_metadata_update_authority",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "metadata",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "spl_token",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "solana_program",
+                ":",
+                ":",
+                "system_program",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "sysvar",
+                ":",
+                ":",
+                "rent",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ]
+            ]
+          }
+        ],
+        "accountsVar": {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "master_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition_mark_pda",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_account_owner",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_account",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_metadata_update_authority",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "spl_token",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "sign_metadata",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "creator",
+          "filedType": "Pubkey"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "sign_metadata",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "creator",
+            "filedType": "Pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "convert_master_edition_v1_to_v2",
+      "isInstructionFn": true,
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "master_edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "one_time_auth",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "printing_mint",
+          "filedType": "Pubkey"
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "convert_master_edition_v1_to_v2",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "master_edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "one_time_auth",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "printing_mint",
+            "filedType": "Pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mint_edition_from_master_edition_via_vault_proxy",
+      "isInstructionFn": true,
+      "accounts": [
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_metadata",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_edition",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "master_edition",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "new_mint",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "edition_mark_pda",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "new_mint_authority",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": false,
+          "name": "payer",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "vault_authority",
+          "isSigner": true
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "safety_deposit_store",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "safety_deposit_box",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "vault",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "new_metadata_update_authority",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "metadata",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "token_program",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "token_vault_program_info",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "solana_program",
+          "isSigner": false
+        },
+        {
+          "isAccount": true,
+          "isReadonly": true,
+          "name": "sysvar",
+          "isSigner": false
+        }
+      ],
+      "localVars": [
+        {
+          "isArg": true,
+          "name": "program_id",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "master_edition",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_mint",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "edition_mark_pda",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_mint_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "payer",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "vault_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "safety_deposit_store",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "safety_deposit_box",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "vault",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "new_metadata_update_authority",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "metadata",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "token_program",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "token_vault_program_info",
+          "filedType": "Pubkey"
+        },
+        {
+          "isArg": true,
+          "name": "edition",
+          "filedType": "u64"
+        },
+        {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "master_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition_mark_pda",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "vault_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "safety_deposit_store",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "safety_deposit_box",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "vault",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_metadata_update_authority",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_program",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_vault_program_info",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "outputTypePath": [
+          "Instruction"
+        ],
+        "funName": "mint_edition_from_master_edition_via_vault_proxy",
+        "localVars": [
+          {
+            "isArg": true,
+            "name": "program_id",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "master_edition",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_mint",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "edition_mark_pda",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_mint_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "payer",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "vault_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "safety_deposit_store",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "safety_deposit_box",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "vault",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "new_metadata_update_authority",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "metadata",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "token_program",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "token_vault_program_info",
+            "filedType": "Pubkey"
+          },
+          {
+            "isArg": true,
+            "name": "edition",
+            "filedType": "u64"
+          },
+          {
+            "name": "accounts",
+            "varItems": [
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_metadata",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_edition",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "master_edition",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "new_mint",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "edition_mark_pda",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "new_mint_authority",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new",
+                null,
+                "(",
+                "payer",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "vault_authority",
+                ",",
+                "true",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "safety_deposit_store",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "safety_deposit_box",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "vault",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "new_metadata_update_authority",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "metadata",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "token_program",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "token_vault_program_info",
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "solana_program",
+                ":",
+                ":",
+                "system_program",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ],
+              [
+                "AccountMeta",
+                ":",
+                ":",
+                "new_readonly",
+                null,
+                "(",
+                "sysvar",
+                ":",
+                ":",
+                "rent",
+                ":",
+                ":",
+                "id",
+                null,
+                ",",
+                "false",
+                ")",
+                ","
+              ]
+            ]
+          }
+        ],
+        "accountsVar": {
+          "name": "accounts",
+          "varItems": [
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "master_edition",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "new_mint",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "edition_mark_pda",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_mint_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new",
+              null,
+              "(",
+              "payer",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "vault_authority",
+              ",",
+              "true",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "safety_deposit_store",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "safety_deposit_box",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "vault",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "new_metadata_update_authority",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "metadata",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_program",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "token_vault_program_info",
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "solana_program",
+              ":",
+              ":",
+              "system_program",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ],
+            [
+              "AccountMeta",
+              ":",
+              ":",
+              "new_readonly",
+              null,
+              "(",
+              "sysvar",
+              ":",
+              ":",
+              "rent",
+              ":",
+              ":",
+              "id",
+              null,
+              ",",
+              "false",
+              ")",
+              ","
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}
