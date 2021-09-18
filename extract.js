@@ -28,6 +28,13 @@ function getFieldTyp(ty) {
         // console.log(typeDef.arguments);
         for (let index = 0; index < typeDef.arguments.args.length; index++) {
           const arg = typeDef.arguments.args[index];
+
+          if (!arg.path) {
+            // for()
+            console.log(arg)
+            continue;
+          }
+
           for (let index = 0; index < arg.path.segments.length; index++) {
             const innerType = arg.path.segments[index];
             fieldType.push(innerType.ident.to_string);
@@ -207,6 +214,92 @@ function parseEnum(itemEnum) {
   };
 }
 
+
+function getTypePath(tp) {
+
+    const path = tp.path;
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        
+    }
+
+}
+
+function getFn(fn) {
+    const funName = fn.sig.ident.to_string
+    const outputTypePath = getFieldTyp(fn.sig.output[1]);
+    const lastExprCall = fn.block.stmts[fn.block.stmts.length - 1];
+    const localVars = [];
+
+    for (let index = 0; index < fn.block.stmts.length; index++) {
+      const blockItem = fn.block.stmts[index];
+
+      if (blockItem._type == 'Local') {
+          const name = blockItem.pat.ident.to_string
+
+          if (name == "accounts") {
+            const vecExpMacro = blockItem.init[1];
+            const accounts = vecExpMacro.mac;
+            const lines = []
+            let idents = [];
+
+            for (
+              let index = 0;
+              index < vecExpMacro.mac.tokens.length;
+              index++
+            ) {
+              const token = vecExpMacro.mac.tokens[index];
+              const str = token.to_string ? token.to_string : token.as_char;
+             
+              idents.push(str);
+              if (token._type == "Group") {
+                idents.push('(')
+                for (let index = 0; index < token.stream.length; index++) {
+                  const element = token.stream[index];
+                   const str = element.to_string
+                     ? element.to_string
+                     : element.as_char;
+                  idents.push(str);
+                }
+
+                idents.push(")");
+                //   console.log(token.stream);
+              }
+
+              if (token._type == 'Punct' && token.as_char) {
+                lines.push(idents);
+                idents = []
+              }
+
+            //   console.log({
+            //     idents,
+            //   });
+            }
+            console.log({
+              lines,
+            });
+          }
+
+        localVars.push({
+          name,
+        //   lines,
+        });
+
+      }
+    }
+
+
+
+
+    console.log({
+      outputTypePath,
+      funName,
+      localVars,
+      lastExprCall,
+    });
+}
+
 function parseAST(ast) {
   const useTypes = new Set();
 
@@ -269,6 +362,10 @@ function parseAST(ast) {
       allEnumInstructions.enumInstructions.forEach((_) => {
         enumInstructions.set(_.instructionCode, _.instructionName);
       });
+    }
+
+    if (item._type == 'ItemFn') {
+        const fn = getFn(item);
     }
   });
 
