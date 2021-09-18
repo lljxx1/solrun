@@ -572,7 +572,7 @@ function parseAST(ast) {
 
   let allStructs = [];
   let implEnum = null;
-  let allEnumInstructions = null;
+  let allEnumInstructions = [];
   let allFucs = []
 
   ast.items.forEach((item) => {
@@ -597,10 +597,11 @@ function parseAST(ast) {
     }
 
     if (item._type == "ItemEnum") {
-      allEnumInstructions = parseEnum(item);
-      allEnumInstructions.enumInstructions.forEach((_) => {
+      const enumIn = parseEnum(item);
+      enumIn.enumInstructions.forEach((_) => {
         enumInstructions.set(_.instructionCode, _.instructionName);
       });
+      allEnumInstructions.push(enumIn);
     }
 
     if (item._type == 'ItemFn') {
@@ -626,7 +627,41 @@ function parseAST(ast) {
     allFucs
   };
 
-  // console.log(parsedABI);
+  const instructions = [];
+  const allEnumInstruction = allEnumInstructions[0];
+  // instructions
+
+  // const instructionMap = {};
+  // allFucs.forEach(_ => {
+  // })
+
+  // const allEnumInstruction 
+
+  allEnumInstruction.enumInstructions.forEach(enumInstruction => {
+    const instruction = [];
+    instruction.code = enumInstruction.instructionCode;
+    instruction.name = enumInstruction.instructionName.name;
+    const argsStructName = enumInstruction.instructionName.struct;
+
+    const instructionRefFunc = allFucs.find(_ => _.refInstruction == `${allEnumInstruction.enumName}::${instruction.name}`);
+    if (instructionRefFunc) {
+      instruction.accounts = instructionRefFunc.accounts
+      instruction.opName = instructionRefFunc.name
+    }
+
+    if (argsStructName) {
+      const argsStructDef = allStructs.find(_ => _.name == argsStructName)
+      instruction.args = argsStructDef
+    }
+
+    // instruction
+    instructions.push(instruction);
+  })
+
+
+
+
+  console.log(instructions);
   return parsedABI;
 }
 

@@ -26,131 +26,133 @@
   "implEnum": null,
   "implInsts": {},
   "enumInstructions": {},
-  "allEnumInstructions": {
-    "enumName": "MetadataInstruction",
-    "enumInstructions": [
-      {
-        "instructionCode": 0,
-        "fields": [],
-        "instructionName": {
-          "name": "CreateMetadataAccount",
-          "struct": "CreateMetadataAccountArgs"
+  "allEnumInstructions": [
+    {
+      "enumName": "MetadataInstruction",
+      "enumInstructions": [
+        {
+          "instructionCode": 0,
+          "fields": [],
+          "instructionName": {
+            "name": "CreateMetadataAccount",
+            "struct": "CreateMetadataAccountArgs"
+          }
+        },
+        {
+          "instructionCode": 1,
+          "fields": [],
+          "instructionName": {
+            "name": "UpdateMetadataAccount",
+            "struct": "UpdateMetadataAccountArgs"
+          }
+        },
+        {
+          "instructionCode": 2,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedCreateMasterEdition",
+            "struct": "CreateMasterEditionArgs"
+          }
+        },
+        {
+          "instructionCode": 3,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedMintNewEditionFromMasterEditionViaPrintingToken",
+            "struct": null
+          }
+        },
+        {
+          "instructionCode": 4,
+          "fields": [],
+          "instructionName": {
+            "name": "UpdatePrimarySaleHappenedViaToken",
+            "struct": null
+          }
+        },
+        {
+          "instructionCode": 5,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedSetReservationList",
+            "struct": "SetReservationListArgs"
+          }
+        },
+        {
+          "instructionCode": 6,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedCreateReservationList",
+            "struct": null
+          }
+        },
+        {
+          "instructionCode": 7,
+          "fields": [],
+          "instructionName": {
+            "name": "SignMetadata",
+            "struct": null
+          }
+        },
+        {
+          "instructionCode": 8,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedMintPrintingTokensViaToken",
+            "struct": "MintPrintingTokensViaTokenArgs"
+          }
+        },
+        {
+          "instructionCode": 9,
+          "fields": [],
+          "instructionName": {
+            "name": "DeprecatedMintPrintingTokens",
+            "struct": "MintPrintingTokensViaTokenArgs"
+          }
+        },
+        {
+          "instructionCode": 10,
+          "fields": [],
+          "instructionName": {
+            "name": "CreateMasterEdition",
+            "struct": "CreateMasterEditionArgs"
+          }
+        },
+        {
+          "instructionCode": 11,
+          "fields": [],
+          "instructionName": {
+            "name": "MintNewEditionFromMasterEditionViaToken",
+            "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
+          }
+        },
+        {
+          "instructionCode": 12,
+          "fields": [],
+          "instructionName": {
+            "name": "ConvertMasterEditionV1ToV2",
+            "struct": null
+          }
+        },
+        {
+          "instructionCode": 13,
+          "fields": [],
+          "instructionName": {
+            "name": "MintNewEditionFromMasterEditionViaVaultProxy",
+            "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
+          }
+        },
+        {
+          "instructionCode": 14,
+          "fields": [],
+          "instructionName": {
+            "name": "PuffMetadata",
+            "struct": null
+          }
         }
-      },
-      {
-        "instructionCode": 1,
-        "fields": [],
-        "instructionName": {
-          "name": "UpdateMetadataAccount",
-          "struct": "UpdateMetadataAccountArgs"
-        }
-      },
-      {
-        "instructionCode": 2,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedCreateMasterEdition",
-          "struct": "CreateMasterEditionArgs"
-        }
-      },
-      {
-        "instructionCode": 3,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedMintNewEditionFromMasterEditionViaPrintingToken",
-          "struct": null
-        }
-      },
-      {
-        "instructionCode": 4,
-        "fields": [],
-        "instructionName": {
-          "name": "UpdatePrimarySaleHappenedViaToken",
-          "struct": null
-        }
-      },
-      {
-        "instructionCode": 5,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedSetReservationList",
-          "struct": "SetReservationListArgs"
-        }
-      },
-      {
-        "instructionCode": 6,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedCreateReservationList",
-          "struct": null
-        }
-      },
-      {
-        "instructionCode": 7,
-        "fields": [],
-        "instructionName": {
-          "name": "SignMetadata",
-          "struct": null
-        }
-      },
-      {
-        "instructionCode": 8,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedMintPrintingTokensViaToken",
-          "struct": "MintPrintingTokensViaTokenArgs"
-        }
-      },
-      {
-        "instructionCode": 9,
-        "fields": [],
-        "instructionName": {
-          "name": "DeprecatedMintPrintingTokens",
-          "struct": "MintPrintingTokensViaTokenArgs"
-        }
-      },
-      {
-        "instructionCode": 10,
-        "fields": [],
-        "instructionName": {
-          "name": "CreateMasterEdition",
-          "struct": "CreateMasterEditionArgs"
-        }
-      },
-      {
-        "instructionCode": 11,
-        "fields": [],
-        "instructionName": {
-          "name": "MintNewEditionFromMasterEditionViaToken",
-          "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
-        }
-      },
-      {
-        "instructionCode": 12,
-        "fields": [],
-        "instructionName": {
-          "name": "ConvertMasterEditionV1ToV2",
-          "struct": null
-        }
-      },
-      {
-        "instructionCode": 13,
-        "fields": [],
-        "instructionName": {
-          "name": "MintNewEditionFromMasterEditionViaVaultProxy",
-          "struct": "MintNewEditionFromMasterEditionViaTokenArgs"
-        }
-      },
-      {
-        "instructionCode": 14,
-        "fields": [],
-        "instructionName": {
-          "name": "PuffMetadata",
-          "struct": null
-        }
-      }
-    ]
-  },
+      ]
+    }
+  ],
   "allStructs": [
     {
       "name": "UpdateMetadataAccountArgs",
