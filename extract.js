@@ -232,6 +232,52 @@ function parseEnum(itemEnum) {
   };
 }
 
+function parseExprMacro(vecExpMacro) {
+  // const vecExpMacro = blockItem.init[1];
+  // const lines = []
+  let varItems = [];
+  let idents = [];
+
+  function flush() {
+    varItems.push(idents);
+    idents = []
+  }
+  for (
+    let index = 0;
+    index < vecExpMacro.mac.tokens.length;
+    index++
+  ) {
+    const token = vecExpMacro.mac.tokens[index];
+    const str = token.to_string ? token.to_string : token.as_char;
+    idents.push(str);
+    if (token._type == "Group") {
+      idents.push('(')
+      for (let index = 0; index < token.stream.length; index++) {
+        const element = token.stream[index];
+        const str = element.to_string
+          ? element.to_string
+          : element.as_char;
+        idents.push(str);
+      }
+
+      idents.push(")");
+    }
+
+    if (token._type == 'Punct' && token.as_char == ',') {
+      flush();
+    }
+  }
+
+  if (idents.length) {
+    flush()
+  }
+
+  return {
+    varItems
+  }
+
+}
+
 function getFn(fn) {
   const funName = fn.sig.ident.to_string
   const outputTypePath = getFieldTyp(fn.sig.output[1]);
@@ -239,6 +285,7 @@ function getFn(fn) {
   const localVars = [];
   const inputs = [];
   const inputsDef = fn.sig.inputs;
+  const exprStructs = [];
 
   for (let index = 0; index < inputsDef.length; index++) {
     const input = inputsDef[index];
@@ -253,9 +300,7 @@ function getFn(fn) {
     })
   }
 
-
   const instDataName = 'data';
-
   for (let index = 0; index < fn.block.stmts.length; index++) {
     const blockItem = fn.block.stmts[index];
     if (blockItem._type == 'Local') {
@@ -298,37 +343,41 @@ function getFn(fn) {
       // console.log('Local', name)
       if (name == "accounts") {
         const vecExpMacro = blockItem.init[1];
+        const result = parseExprMacro(vecExpMacro);
+        result.varItems.forEach(_ => {
+          varItems.push(_);
+        });
         // const accounts = vecExpMacro.mac;
         // const lines = []
-        let idents = [];
-        for (
-          let index = 0;
-          index < vecExpMacro.mac.tokens.length;
-          index++
-        ) {
-          const token = vecExpMacro.mac.tokens[index];
-          const str = token.to_string ? token.to_string : token.as_char;
+        // let idents = [];
+        // for (
+        //   let index = 0;
+        //   index < vecExpMacro.mac.tokens.length;
+        //   index++
+        // ) {
+        //   const token = vecExpMacro.mac.tokens[index];
+        //   const str = token.to_string ? token.to_string : token.as_char;
 
-          idents.push(str);
-          if (token._type == "Group") {
-            idents.push('(')
-            for (let index = 0; index < token.stream.length; index++) {
-              const element = token.stream[index];
-              const str = element.to_string
-                ? element.to_string
-                : element.as_char;
-              idents.push(str);
-            }
+        //   idents.push(str);
+        //   if (token._type == "Group") {
+        //     idents.push('(')
+        //     for (let index = 0; index < token.stream.length; index++) {
+        //       const element = token.stream[index];
+        //       const str = element.to_string
+        //         ? element.to_string
+        //         : element.as_char;
+        //       idents.push(str);
+        //     }
 
-            idents.push(")");
-            //   console.log(token.stream);
-          }
+        //     idents.push(")");
+        //     //   console.log(token.stream);
+        //   }
 
-          if (token._type == 'Punct' && token.as_char == ',') {
-            varItems.push(idents);
-            idents = []
-          }
-        }
+        //   if (token._type == 'Punct' && token.as_char == ',') {
+        //     varItems.push(idents);
+        //     idents = []
+        //   }
+        // }
       }
       localVars.push({
         name,
@@ -337,17 +386,85 @@ function getFn(fn) {
       });
 
     }
+
+    // Instruction {
+    //   program_id,
+    //   accounts: vec![
+    //       AccountMeta::new(metadata, false),
+    //       AccountMeta::new_readonly(owner, true),
+    //       AccountMeta::new_readonly(token, false),
+    //   ],
+    //   data: MetadataInstruction::UpdatePrimarySaleHappenedViaToken
+    //       .try_to_vec()
+    //       .unwrap(),
+
+    if (blockItem._type == "ExprStruct") {
+      const sturctName = getPathName(blockItem.path).join('');
+      const isInstructionStruct = sturctName.indexOf('Instruction') > -1;
+      // console.log(blockItem, sturctName, isInstructionStruct)
+      const fields = [];
+
+      for (let index = 0; index < blockItem.fields.length; index++) {
+        const field = blockItem.fields[index];
+        if (field._type != 'FieldValue') continue;
+        const fieldName = field.member.to_string;
+        const fieldExpr = field.expr;
+        const fieldExprType = fieldExpr._type;
+
+        if (fieldExprType == 'ExprMacro') {
+          const result = parseExprMacro(fieldExpr);
+          // if (funName == 'puff_metadata_account' && fieldName == 'accounts') {
+          //   console.log(fieldExpr, result);
+          //   process.exit();
+          // }
+          fields.push({
+            name: fieldName,
+            varItems: result.varItems,
+          })
+
+
+          // console.log(fieldName, result.varItems.map(_ => _.join('')));
+        }
+
+        if (fieldExprType == "ExprMethodCall") {
+
+          if (fieldExpr.receiver.receiver) {
+            const funcPath = fieldExpr.receiver.receiver.path ? fieldExpr.receiver.receiver : fieldExpr.receiver.receiver.func;
+            // console.log('receiver', fieldExpr.receiver, funcPath)
+            if (funcPath) {
+              fields.push({
+                name: fieldName,
+                varItems: getPathName(funcPath.path).join('')
+              })
+            }
+          } else {
+            // console.log(fieldExpr.receiver)
+            // process.exit();
+          }
+        }
+      }
+
+      // console.log(sturctName, fields)
+      exprStructs.push({
+        name: sturctName,
+        fields
+      })
+    }
   }
+
+  // console.log('exprStructs', exprStructs)
 
 
   const accountsVar = localVars.find(_ => _.name == "accounts")
   const dataVar = localVars.find(_ => _.name == "data")
+  const InstructionExpr = exprStructs.find(_ => _.name.indexOf('Instruction') > -1);
 
   const isInstructionFn = outputTypePath.indexOf('Instruction') > -1;
 
-  const refInstruction = dataVar && dataVar.varItems && dataVar.varItems[0];
-  const accounts = accountsVar && accountsVar.varItems.map(_ => {
-    // const pairs =  _.split('AccountMeta::new');
+  let refInstruction = dataVar && dataVar.varItems && dataVar.varItems[0];
+
+  // parse
+  function parseAccountFromDef(_) {
     const isAccount = _[0] == 'AccountMeta';
     const isReadonly = _[3] == 'new_readonly';
     const isNew = _[3] == 'new';
@@ -363,13 +480,44 @@ function getFn(fn) {
       isSigner
       // func: _[3]
     }
-  })
+  }
 
-  console.log(funName, {
-    localVars, 
-    accounts, 
-    accountsVar
-  })
+  let accounts = accountsVar && accountsVar.varItems.map(parseAccountFromDef)
+
+  //  Instruction {
+  //   accounts: vec![
+  //     AccountMeta::new(metadata_account, false),
+  //     AccountMeta::new_readonly(update_authority, true),
+  //   ],
+  //   data: MetadataInstruction::MintNewEditionFromMasterEditionViaVaultProxy(
+  //       MintNewEditionFromMasterEditionViaTokenArgs { edition },
+  //   )
+  //   .try_to_vec()
+  //   .unwrap(),
+  // }
+  if (InstructionExpr) {
+    // found in Instruction { data: XXX };
+    if (!refInstruction) {
+      const InstructionExprDataRef = InstructionExpr.fields.find(_ => _.name == 'data');
+      if (InstructionExprDataRef) {
+        refInstruction = InstructionExprDataRef.varItems;
+      }
+    }
+
+    // found from 
+    if (!accounts) {
+      const InstructionExprAccounts = InstructionExpr.fields.find(_ => _.name == 'accounts');
+      accounts = InstructionExprAccounts.varItems.map(parseAccountFromDef);
+    }
+
+    console.log('InstructionExpr', funName, InstructionExpr)
+  }
+
+  // console.log(funName, {
+  //   localVars,
+  //   accounts,
+  //   accountsVar
+  // })
 
   const result = {
     name: funName,
