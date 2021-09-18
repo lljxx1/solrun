@@ -535,6 +535,18 @@ function getFn(fn) {
   return result;
 }
 
+
+function normalizeInput(inputs) {
+  // inputs.for
+  return inputs.map(_ => {
+    return {
+      name: _.fieldName,
+      // ..._,
+      type: _.fieldType && _.fieldType.filter(_ => _ != 'Vec' && _ != 'Option')[0]
+    }
+  })
+}
+
 function parseAST(ast) {
   const useTypes = new Set();
 
@@ -656,6 +668,11 @@ function parseAST(ast) {
       if (enumInstruction.fields) {
         instruction.inputs = enumInstruction.fields
       }
+    }
+
+
+    if (instruction.inputs) {
+      instruction.inputs = normalizeInput(instruction.inputs);
     }
 
     // if (enumInstruction.fields) {

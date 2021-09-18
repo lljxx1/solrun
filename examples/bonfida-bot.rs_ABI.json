@@ -44,22 +44,16 @@
       "opName": "init",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "max_number_of_assets",
-          "fieldType": [
-            "u32"
-          ]
+          "name": "max_number_of_assets",
+          "type": "u32"
         },
         {
-          "fieldName": "number_of_markets",
-          "fieldType": [
-            "u16"
-          ]
+          "name": "number_of_markets",
+          "type": "u16"
         }
       ]
     },
@@ -113,36 +107,24 @@
       "opName": "create",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "fee_collection_period",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "fee_collection_period",
+          "type": "u64"
         },
         {
-          "fieldName": "fee_ratio",
-          "fieldType": [
-            "u16"
-          ]
+          "name": "fee_ratio",
+          "type": "u16"
         },
         {
-          "fieldName": "deposit_amounts",
-          "fieldType": [
-            "Vec",
-            "u64"
-          ]
+          "name": "deposit_amounts",
+          "type": "u64"
         },
         {
-          "fieldName": "markets",
-          "fieldType": [
-            "Vec",
-            "Pubkey"
-          ]
+          "name": "markets",
+          "type": "Pubkey"
         }
       ]
     },
@@ -196,16 +178,12 @@
       "opName": "deposit",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "pool_token_amount",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "pool_token_amount",
+          "type": "u64"
         }
       ]
     },
@@ -301,88 +279,60 @@
       "opName": "create_order",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "side",
-          "fieldType": [
-            "Side"
-          ]
+          "name": "side",
+          "type": "Side"
         },
         {
-          "fieldName": "limit_price",
-          "fieldType": [
-            "NonZeroU64"
-          ]
+          "name": "limit_price",
+          "type": "NonZeroU64"
         },
         {
-          "fieldName": "ratio_of_pool_assets_to_trade",
-          "fieldType": [
-            "NonZeroU16"
-          ]
+          "name": "ratio_of_pool_assets_to_trade",
+          "type": "NonZeroU16"
         },
         {
-          "fieldName": "order_type",
-          "fieldType": [
-            "OrderType"
-          ]
+          "name": "order_type",
+          "type": "OrderType"
         },
         {
-          "fieldName": "client_id",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "client_id",
+          "type": "u64"
         },
         {
-          "fieldName": "self_trade_behavior",
-          "fieldType": [
-            "SelfTradeBehavior"
-          ]
+          "name": "self_trade_behavior",
+          "type": "SelfTradeBehavior"
         },
         {
-          "fieldName": "source_index",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "source_index",
+          "type": "u64"
         },
         {
-          "fieldName": "target_index",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "target_index",
+          "type": "u64"
         },
         {
-          "fieldName": "market_index",
-          "fieldType": [
-            "u16"
-          ]
+          "name": "market_index",
+          "type": "u16"
         },
         {
-          "fieldName": "coin_lot_size",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "coin_lot_size",
+          "type": "u64"
         },
         {
-          "fieldName": "pc_lot_size",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "pc_lot_size",
+          "type": "u64"
         },
         {
-          "fieldName": "target_mint",
-          "fieldType": [
-            "Pubkey"
-          ]
+          "name": "target_mint",
+          "type": "Pubkey"
         },
         {
-          "fieldName": "serum_limit",
-          "fieldType": [
-            "u16"
-          ]
+          "name": "serum_limit",
+          "type": "u16"
         }
       ]
     },
@@ -442,22 +392,16 @@
       "opName": "cancel_order",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "side",
-          "fieldType": [
-            "Side"
-          ]
+          "name": "side",
+          "type": "Side"
         },
         {
-          "fieldName": "order_id",
-          "fieldType": [
-            "u128"
-          ]
+          "name": "order_id",
+          "type": "u128"
         }
       ]
     },
@@ -535,22 +479,16 @@
       "opName": "settle_funds",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "pc_index",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "pc_index",
+          "type": "u64"
         },
         {
-          "fieldName": "coin_index",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "coin_index",
+          "type": "u64"
         }
       ]
     },
@@ -598,16 +536,12 @@
       "opName": "redeem",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         },
         {
-          "fieldName": "pool_token_amount",
-          "fieldType": [
-            "u64"
-          ]
+          "name": "pool_token_amount",
+          "type": "u64"
         }
       ]
     },
@@ -661,10 +595,8 @@
       "opName": "collect_fees",
       "inputs": [
         {
-          "fieldName": "pool_seed",
-          "fieldType": [
-            "u8;32"
-          ]
+          "name": "pool_seed",
+          "type": "u8;32"
         }
       ]
     }
