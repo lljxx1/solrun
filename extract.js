@@ -5,9 +5,6 @@ const ProgramError = "solana_program::program_error::ProgramError";
 const AccountMeta = "solana_program::instruction::AccountMeta";
 const Pubkey = "solana_program::pubkey::Pubkey";
 
-// function getPunctuated(d) {}
-
-
 function getPathName(path) {
   const pathNames = []
   for (let index = 0; index < path.segments.length; index++) {
@@ -614,7 +611,7 @@ function parseAST(ast) {
   const hasAccountMeta = useTypes.has(AccountMeta);
   const hasProgramError = useTypes.has(ProgramError);
   //   const hasAccountMeta = useTypes.has(AccountMeta);
-  const parsedABI = {
+  let parsedABI = {
     use: Array.from(useTypes),
     meta: { hasInstruction, hasAccountMeta, hasProgramError },
     structs,
@@ -638,7 +635,7 @@ function parseAST(ast) {
   // const allEnumInstruction 
 
   allEnumInstruction.enumInstructions.forEach(enumInstruction => {
-    const instruction = [];
+    const instruction = {};
     instruction.code = enumInstruction.instructionCode;
     instruction.name = enumInstruction.instructionName.name;
     const argsStructName = enumInstruction.instructionName.struct;
@@ -651,18 +648,29 @@ function parseAST(ast) {
 
     if (argsStructName) {
       const argsStructDef = allStructs.find(_ => _.name == argsStructName)
-      instruction.args = argsStructDef
+      if (argsStructDef) {
+        instruction.inputs = argsStructDef.fields;
+        instruction.inputsName = argsStructDef.name;
+      }
+    } else {
+      if (enumInstruction.fields) {
+        instruction.inputs = enumInstruction.fields
+      }
     }
+
+    // if (enumInstruction.fields) {
+    //   instruction.inputs = enumInstruction.fields
+    // }
 
     // instruction
     instructions.push(instruction);
   })
 
-
-
-
   console.log(instructions);
-  return parsedABI;
+  return {
+    instructions,
+    raw: parsedABI
+  };
 }
 
 // parseAST(ast);
