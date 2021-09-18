@@ -267,7 +267,7 @@ function getFn(fn) {
                 //   console.log(token.stream);
               }
 
-              if (token._type == 'Punct' && token.as_char) {
+              if (token._type == 'Punct' && token.as_char == ',') {
                 lines.push(idents);
                 idents = []
               }
