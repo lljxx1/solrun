@@ -9,6 +9,8 @@ const { parseAST } = require('./extract');
 async function gen(filename, opts) {
   const baseDir = process.cwd();
   const mainFile = path.resolve(baseDir, filename);
+  const outFile = path.resolve(baseDir, path.basename(filename).replace('.rs', '.json'));
+  const abiDefFile = path.resolve(baseDir, 'abi.json');
   // console.log("baseDir", baseDir, mainFile);
   const rustCode = fs.readFileSync(mainFile, 'utf-8');
   const wasm = WebAssembly.compile(fs.readFileSync(__dirname + '/syn/astexplorer_syn_bg.wasm'));
@@ -16,7 +18,15 @@ async function gen(filename, opts) {
   const result = await syn.parseFile(rustCode);
   const parsedABI = parseAST(result);
   console.log(parsedABI);
-  fs.writeFileSync(`${mainFile}_ABI.json`, JSON.stringify(parsedABI, null, 2));
+
+  fs.writeFileSync(outFile, JSON.stringify(parsedABI, null, 2));
+
+  if (fs.existsSync(abiDefFile)) {
+    const abiContent = require(abiDefFile);
+    abiContent.instructions = parsedABI.instructions;
+    abiContent.genTime = Date.now();
+    fs.writeFileSync(abiDefFile, JSON.stringify(abiContent, null, 2));
+  }
 }
 
 program
