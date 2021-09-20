@@ -1,6 +1,6 @@
 {
   "name": "solrun",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "email": "lljxx1@gmail.com",
   "description": "Command-line tool for run solidity contract. Interpreter based on ethereumjs-vm",
   "license": "ISC",
