@@ -24,7 +24,7 @@ function getPathName(path) {
 function getFieldTyp(ty) {
   if (ty._type == "TypeArray") {
     return [
-      [ty.elem.path.segments[0].ident.to_string, ty.len.lit.digits].join(";"),
+      [ty.elem.path.segments[0].ident.to_string, ty.len.lit ? ty.len.lit.digits : null].join(";"),
     ];
   }
   const type = ty.path ? ty.path : ty.elem.path;
@@ -33,6 +33,10 @@ function getFieldTyp(ty) {
   if (type && type.segments) {
     for (let index = 0; index < type.segments.length; index++) {
       const typeDef = type.segments[index];
+      if (!typeDef.ident) {
+        console.log('no ident')
+        continue;
+      }
       fieldType.push(typeDef.ident.to_string);
 
       if (
@@ -422,6 +426,11 @@ function getFn(fn) {
         }
       }
 
+      if (exprMethodCall && exprMethodCall._type == 'ExprStruct') {
+        varItems.push(getPathName(exprMethodCall.path).join(""));
+        // getPathName();
+      }
+
       localVars.push({
         name,
         varItems,
@@ -505,6 +514,10 @@ function getFn(fn) {
   const isInstructionFn = outputTypePath.indexOf("Instruction") > -1;
 
   let refInstruction = dataVar && dataVar.varItems && dataVar.varItems[0];
+  if (refInstruction && refInstruction.indexOf('Instruction' == -1)) {
+    const parentVar = localVars.find(_ => _.name == refInstruction);
+    refInstruction = parentVar && parentVar.varItems && parentVar.varItems[0];
+  }
 
   // parse
   function parseAccountFromDef(_) {
